@@ -105,7 +105,7 @@ class EmailLoginPage: UIViewController {
         case .mail:
             let loginVC = EmailLoginPage()
             user?.email = tf.text
-            loginVC.labelMessage = "Cual es tu password"
+            loginVC.labelMessage = "¿Cuál es tu password?"
             loginVC.placeholderMessage = "Password"
             loginVC.lt = .password
             self.navigationController?.pushViewController(loginVC, animated: true)
@@ -113,17 +113,21 @@ class EmailLoginPage: UIViewController {
         case .password:
             let loginVC = EmailLoginPage()
             user?.password = tf.text
-            loginVC.labelMessage = "Cual es tu edad?"
+            loginVC.labelMessage = "Cuál es tu edad?"
             loginVC.placeholderMessage = "Edad"
             loginVC.lt = .age
             self.navigationController?.pushViewController(loginVC, animated: true)
             
         case .age:
-            let pinCollectionView = Cell()
+            //let pinCollectionView = Cell()
+            let layout = PinterestLayout()
+            let collectionViewC = Cell(collectionViewLayout: layout)
+            self.navigationController?.pushViewController(collectionViewC, animated: true)
+            
             user?.age = tf.text
             print("Aqui es donde vamos a ir a firebase y guardar nuestro usuario")
             conectarAFirebaseUsandoUsuarioYContraseña(emailParameter: user?.email, passwordParameter: user?.password, nameParameter: user?.age)
-           self.navigationController?.pushViewController(pinCollectionView, animated: true)
+           //self.navigationController?.pushViewController(pinCollectionView, animated: true)
             
         }
         

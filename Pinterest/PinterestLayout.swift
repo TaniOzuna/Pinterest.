@@ -11,6 +11,9 @@ import UIKit
 protocol PinterestLayoutDelegate: class {
     // 1. Method to ask the delegate for the height of the image
     func collectionView(_ collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat
+    func collectionView(_ collectionView:UICollectionView, widthForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat
+    func collectionView(_ collectionView: UICollectionView,
+                        currentPhotoWidth indexPath:IndexPath) -> CGFloat
 }
 
 class PinterestLayout: UICollectionViewLayout {
@@ -40,11 +43,11 @@ class PinterestLayout: UICollectionViewLayout {
     }
     
     override func prepare() {
-        // 1. Only calculate once
+        // 1
         guard cache.isEmpty == true, let collectionView = collectionView else {
             return
         }
-        // 2. Pre-Calculates the X Offset for every column and adds an array to increment the currently max Y Offset for each column
+        // 2
         let columnWidth = contentWidth / CGFloat(numberOfColumns)
         var xOffset = [CGFloat]()
         for column in 0 ..< numberOfColumns {
@@ -53,23 +56,29 @@ class PinterestLayout: UICollectionViewLayout {
         var column = 0
         var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
         
-        // 3. Iterates through the list of items in the first section
+        // 3
         for item in 0 ..< collectionView.numberOfItems(inSection: 0) {
             
             let indexPath = IndexPath(item: item, section: 0)
             
-            // 4. Asks the delegate for the height of the picture and the annotation and calculates the cell frame.
+            // 4
+            //let photoHeight = delegate.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath)
+            //let height = cellPadding * 2 + photoHeight
             let photoHeight = delegate.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath)
-            let height = cellPadding * 2 + photoHeight
+            let photoWidth = delegate.collectionView(collectionView, widthForPhotoAtIndexPath: indexPath)
+            let height = 34 + (delegate.collectionView(collectionView, currentPhotoWidth: indexPath) * photoHeight ) / photoWidth
+            
             let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             
-            // 5. Creates an UICollectionViewLayoutItem with the frame and add it to the cache
+            
+            
+            // 5
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = insetFrame
             cache.append(attributes)
             
-            // 6. Updates the collection view content height
+            // 6
             contentHeight = max(contentHeight, frame.maxY)
             yOffset[column] = yOffset[column] + height
             

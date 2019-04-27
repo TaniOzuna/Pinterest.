@@ -17,17 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        FirebaseApp.configure()
-        window = UIWindow(frame:UIScreen.main.bounds)
-        if let window = window {
-            navigationController = UINavigationController(rootViewController: Cell(collectionViewLayout: UICollectionViewFlowLayout()))
-            window.rootViewController = navigationController
-            window.makeKeyAndVisible()
-        }
         
+        window = UIWindow(frame:UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+         window?.rootViewController = UINavigationController(rootViewController: ViewController())
+        
+        //if let window = window {
+            //navigationController = UINavigationController(rootViewController: PhotoStreamViewController(collectionViewLayout: //PinterestLayout()))
+            //window.rootViewController = navigationController
+            //window.makeKeyAndVisible()
+            
+            FirebaseApp.configure()
+        // Override point for customization after application launch.
         return true
-    }
+        }
+    
     
     
     func applicationWillResignActive(_ application: UIApplication) {

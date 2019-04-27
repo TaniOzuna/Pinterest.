@@ -108,10 +108,6 @@ class ViewController: UIViewController {
     
     @objc func onButtonPressedThird(){
         let loginVC = EmailLoginPage()
-        loginVC.labelMessage = "Cual es tu correo electrónico"
-        loginVC.placeholderMessage = "Correo"
-        loginVC.user = User()
-        loginVC.lt = .mail
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
     
@@ -122,6 +118,10 @@ class ViewController: UIViewController {
     
     @objc func onButtonPressedFirst(){
         let loginVC = EmailLoginPage()
+        loginVC.labelMessage = "¿Cuál es tu correo electrónico?"
+        loginVC.placeholderMessage = "Correo"
+        loginVC.user = User()
+        loginVC.lt = .mail
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
     
